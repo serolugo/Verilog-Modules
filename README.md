@@ -1,135 +1,97 @@
-# Verilog-Modules
-A collection of Verilog modules for digital design and FPGA development. Includes reusable building blocks for learning, experimentation, and hardware projects.
+# Verilog Modules
 
-## Note. 
+## 📌 Overview
+**Verilog Modules** is a personal collection of reusable **Verilog HDL modules** developed for academic projects and FPGA-based designs.
 
-- the following modules are not working yet: demux and register_bank
+The goal of this repository is to serve as a **local, offline-ready module library**, providing reliable building blocks for digital systems without relying on internet access during development.
 
-## 1. Full Adder
+These modules have been designed, tested, and reused across multiple projects, including complete FPGA systems.
 
-**Description:**  
-Combinational module that performs the addition of three binary inputs (two operands and one carry input). It produces a sum (`sum`) and a carry output (`cout`).
+---
 
-**Inputs:**  
-- `a`: First input bit.  
-- `b`: Second input bit.  
-- `cin`: Carry input bit.
+## 🎯 Purpose
+- Provide **clean and reusable HDL components**
+- Speed up development during time-constrained projects
+- Serve as a personal reference library for future designs
+- Support offline development environments
 
-**Outputs:**  
-- `sum`: Result of the addition of the three input bits.  
-- `cout`: Carry output of the operation.
+---
 
-## 2. N-bit Adder
+## 🧩 Included Modules
 
-**Description:**  
-Parametric combinational module that performs binary addition of two *n-bit* operands, including an input carry (`cin`). It outputs the resulting *n-bit* sum and the final carry-out (`cout`).
+### 🔢 Combinational Logic
+- **Multiplexer**
+- **Demultiplexer**
+- **Decoders**
+- **Encoders**
 
-**Inputs:**
-- **a:** First *n-bit* operand.  
-- **b:** Second *n-bit* operand.  
-- **cin:** Carry input bit.  
+### 🔁 Sequential Logic
+- **Registers**
+- **Register Bank**
+- **Counters**
+  - BCD up counters
+  - BCD down counters
+- **Frequency Divider**
 
-**Outputs:**
-- **sum:** *n-bit* result of the addition.  
-- **cout:** Carry output bit generated from the most significant bit (MSB) addition.
+### 🧠 Control Logic
+- **Finite State Machine templates**
+- **Enable / control signal routing**
 
-**Instantiation Format**
+### 🖥 Display Interfaces
+- **Binary to BCD**
+- **BCD to 7-segment decoder**
+- Display routing logic
 
-- n_bit_adder #(.N(N)) dut(.a(a), .b(b), .cin(cin), .sum(sum), .cout(cout));
+---
 
-## 3. N-bit Subtractor
+## 🧱 Design Principles
+All modules in this repository follow these guidelines:
 
-**Description:**  
-Parametric combinational module that performs binary subtraction between two *n-bit* operands, considering an input borrow (`bin`). It outputs the resulting *n-bit* difference and the final borrow-out (`bout`).
+- Fully **synthesizable** (Quartus / Vivado compatible)
+- Parameterizable where applicable
+- Clear port naming
+- No vendor-specific primitives
+- Written with **educational clarity** in mind
+- Designed for reuse in larger systems
 
-**Inputs:**
-- **a:** First *n-bit* operand (minuend).  
-- **b:** Second *n-bit* operand (subtrahend).  
-- **bin:** Borrow input bit.  
+---
 
-**Outputs:**
-- **diff:** *n-bit* result of the subtraction.  
-- **bout:** Borrow output bit generated from the most significant bit (MSB) operation.
+## 🔧 Example Use Cases
+These modules have been used in:
+- Digital clocks
+- Timers and stopwatches
+- Alarm systems
+- FPGA training boards
+- Control-oriented digital designs
 
-## 4. N-bit Comparator
+---
 
-**Description:**  
-Parametric combinational module that compares two *n-bit* operands (`a` and `b`). It outputs three logic signals indicating whether the first operand is greater than, less than, or equal to the second.
+## 🛠 Tools
+- **HDL**: Verilog
+- **Target**: FPGA / CPLD
+- **Tested with**:
+  - Vivado 2024.1
 
-**Inputs:**
-- **a:** First *n-bit* operand to compare.  
-- **b:** Second *n-bit* operand to compare.  
+---
 
-**Outputs:**
-- **a_greater_b:** High when `a` is greater than `b`.  
-- **a_equal_b:** High when `a` is equal to `b`.  
-- **a_less_b:** High when `a` is less than `b`.
+*(Folder names may evolve as the library grows.)*
 
-## 5. N-bit Multiplier
+---
 
-**Description:**  
-Parametric combinational module that performs binary multiplication of two *n-bit* operands. It produces a product with a width of *2n* bits to represent the full result of the operation.
+## 🚀 Project Status
+✅ Actively maintained  
+➕ New modules may be added as needed
 
-**Inputs:**
-- **a:** First *n-bit* operand.  
-- **b:** Second *n-bit* operand.  
+---
 
-**Outputs:**
-- **product:** *2n-bit* result of the multiplication between `a` and `b`.
-  
-## 6. Simple ALU
+## 🔮 Future Additions
+- Testbenches for all modules
+- Parameterized FSM templates
+- Memory blocks (RAM / FIFO)
+- Arithmetic units (ALU, shifters)
 
-**Description:**  
-Combinational Arithmetic Logic Unit (ALU) that performs basic arithmetic and logical operations between two *n-bit* operands. The specific operation is selected through a control signal (`op`). It outputs the resulting value and status flags as needed.
+---
 
-**Inputs:**
-- **a:** First *n-bit* operand.  
-- **b:** Second *n-bit* operand.  
-- **op:** Control signal that selects the operation to perform.  
-
-**Outputs:**
-- **result:** *n-bit* output of the selected operation.  
-- **carry_out (optional):** Carry flag generated by arithmetic operations.  
-- **zero (optional):** High when the result equals zero.
-
-## 7. Parametric Multiplexer
-
-**Description:**  
-Parametric combinational module that selects one input from multiple data sources based on a selection signal. The number of inputs and the bit width of each input can be adjusted through parameters.
-
-**Inputs:**
-- **data_in:** Vector containing all possible input signals.  
-- **sel:** Selection signal that determines which input is routed to the output.  
-
-**Outputs:**
-- **data_out:** Selected input value corresponding to the `sel` signal.
-
-## 9.1 Counter
-
-**Description:**  
-Sequential module that increments its value on each clock pulse. It can be reset to zero using the reset signal and is commonly used for timing, event counting, or state control.
-
-**Inputs:**
-- **clk:** Clock input signal.  
-- **rst:** Active reset signal that clears the counter to zero.  
-
-**Outputs:**
-- **count:** Current value of the counter.
-
-## 9.2 Up/Down Counter
-
-**Description:**  
-Sequential module that can increment or decrement its count based on a control input. It includes synchronous reset functionality and is useful for bidirectional counting applications.
-
-**Inputs:**
-- **clk:** Clock input signal.  
-- **rst:** Active reset signal that clears the counter to zero.  
-- **up_down:** Control signal that determines the counting direction (1 = up, 0 = down).  
-
-**Outputs:**
-- **count:** Current value of the counter.
-
-
-
-
-
+## 📜 License
+Released for educational and academic use.  
+Feel free to reuse, modify, and extend these modules with proper attribution.
